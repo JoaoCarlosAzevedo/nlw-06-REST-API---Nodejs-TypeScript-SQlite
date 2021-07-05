@@ -1,14 +1,14 @@
 import { response, Router } from "express";
 import { CreateUserController } from "./controllers/CreateUserControler";
+import { CreateTagController } from "./controllers/CreateTagController";
+import { ensureAdmin } from "./middlewares/ensureAdmin";
 
 const router = Router();
 const createUserControler = new CreateUserController();
+const createTagController = new CreateTagController();
 
-router.post("/users",createUserControler.handle)
+router.post("/users",createUserControler.handle);
+router.post("/tags",ensureAdmin,createTagController.handle);
 
-router.get("/", (request: any,response: any)=>{
-    console.log("entrei");
-    return response.json( { message:"hii"} )
-}) 
 
 export { router }
